@@ -18,7 +18,7 @@
   </style>
   <link rel="stylesheet" href="bootstrap.css">
 </head>
-<body class="p-4 bg-light">
+<body id="body-id" class="p-4">
 
   <div class="container">
     <h2 class="mb-4">Video Cutter</h2>
@@ -88,5 +88,17 @@
   </div>
 
   <script src="clientSideJS.js"></script>
+
+  <script>
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      // User prefers dark mode
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+      document.getElementById('body-id').classList.add("bg")
+    } else {
+      // User prefers light mode
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+      document.getElementById('body-id').classList.add("bg-light")
+    }
+  </script>
 </body>
 </html>

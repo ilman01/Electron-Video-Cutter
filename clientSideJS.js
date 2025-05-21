@@ -32,6 +32,7 @@ const goToStart = document.getElementById('goToStart')
 const setToMaxEnd = document.getElementById('setToMaxEnd')
 const goToEnd = document.getElementById('goToEnd')
 
+const runBtn = document.getElementById('runBtn')
 
 function displayVideo(videoFilePath) {
     videoPlayer.src = videoFilePath;
@@ -135,14 +136,20 @@ goToEnd.addEventListener("click", () => {
 })
 
 
-document.getElementById('runBtn').addEventListener('click', async () => {
+runBtn.addEventListener('click', async () => {
     console.log("RUNNING!!!!")
+    runBtn.classList.remove("btn-success");
+    runBtn.classList.add("btn-warning");
+    runBtn.textContent = "Processing..."
 
     var command = `ffmpeg -y -ss ${startTimeInput.value} -to ${endTimeInput.value} -i "${inputFileText.value}" -map 0:v -map 0:a -map_chapters -1 -shortest -c:v ${encoderInput.value} -c:a aac -b:a 320k -ac 2 -qp ${QPInput.value} -filter:a "volume=${gainInput.value}dB" "${outputFileText.value}"`
     console.log(command)
     await ipcRenderer.invoke('execute-command-backend', {cmd: command});
 
     console.log("It's done!")
+    runBtn.classList.remove("btn-warning");
+    runBtn.classList.add("btn-success");
+    runBtn.textContent = "Run FFmpeg"
 });
 
 

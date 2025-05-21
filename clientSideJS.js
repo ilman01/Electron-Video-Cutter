@@ -99,24 +99,14 @@ setToPlayerTimeEnd.addEventListener("click", () => {
     endTimeInput.value = formatTime(videoPlayer.currentTime)
 })
 
-function getFormValues() {
-    return {
-    inputFile: document.getElementById('inputFile').value,
-    outputFile: document.getElementById('outputFile').value,
-    startTime: document.getElementById('startTime').value,
-    endTime: document.getElementById('endTime').value,
-    gain: document.getElementById('gain').value,
-    quality: document.getElementById('quality').value,
-    useEncoder: document.getElementById('useEncoder').value
-    };
-}
-
-
 
 document.getElementById('runBtn').addEventListener('click', async () => {
-    const args = getFormValues();
     console.log("RUNNING!!!!")
-    await ipcRenderer.invoke('run-ffmpeg', args);
+
+    var command = `ffmpeg -y -ss ${startTimeInput.value} -to ${endTimeInput.value} -i "${inputFileText.value}" -map 0:v -map 0:a -map_chapters -1 -shortest -c:v ${encoderInput.value} -c:a aac -b:a 320k -ac 2 -qp ${QPInput.value} -filter:a "volume=${gainInput.value}dB" "${outputFileText.value}"`
+    console.log(command)
+    await ipcRenderer.invoke('execute-command-backend', {cmd: command});
+
     console.log("It's done!")
 });
 

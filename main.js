@@ -18,34 +18,6 @@ function createWindow({ width, height, htmlFile}) {
   win.loadFile(htmlFile);
 }
 
-function buildFFmpegCommand({
-  inputFile,
-  outputFile,
-  startTime,
-  endTime,
-  gain,
-  quality,
-  useEncoder
-}) {
-  return [
-    'ffmpeg',
-    '-y',
-    '-ss', startTime,
-    '-to', endTime,
-    '-i', `"${inputFile}"`,
-    '-map', '0:v',
-    '-map', '0:a',
-    '-map_chapters', '-1',
-    '-shortest',
-    '-c:v', useEncoder,
-    '-b:a', '320k',
-    '-ac', '2',
-    '-qp', quality,
-    '-filter:a', `"volume=${gain}dB"`,
-    `"${outputFile}"`
-  ].join(' ');
-}
-
 function executeCommand(command) {
   return new Promise((resolve) => {
     exec(command, (error, stdout, stderr) => {
@@ -71,29 +43,9 @@ function main() {
       return saveDialogReturnPath
     })
 
-    ipcMain.handle('run-ffmpeg', async (_, {
-      inputFile,
-      outputFile,
-      startTime,
-      endTime,
-      gain,
-      quality,
-      useEncoder
-    }) => {
-
-      const command = buildFFmpegCommand({
-        inputFile,
-        outputFile,
-        startTime,
-        endTime,
-        gain,
-        quality,
-        useEncoder
-      });
-
-      const result = await executeCommand(command);
-      return result;
-    });
+    ipcMain.handle('execute-command-backend', async (_, {cmd}) => {
+      return await executeCommand(cmd);
+    })
   });
 }
 

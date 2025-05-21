@@ -15,34 +15,77 @@
       padding: 5px;
       margin-bottom: 10px;
     }
-    
-    input.dragover {
-      border: 2px dashed #00aaff;
-      background-color: #eef;
-    }
   </style>
+  <link rel="stylesheet" href="bootstrap.css">
 </head>
-<body>
-  <h2>Video Cutter</h2>
+<body class="p-4 bg-light">
 
-  <input type="text" id="inputFile" placeholder="Input file" class="horizontal-text-big">
-  <button id="openFileBtn">Open File</button>
-  <br>
-  <input type="text" id="outputFile" placeholder="Output file" class="horizontal-text-big">
-  <button id="saveFileBtn">Save File</button>
-  <br>
+  <div class="container">
+    <h2 class="mb-4">Video Cutter</h2>
 
-  <input type="file" id="fileInputDialog" style="display: none;">
+    <div class="mb-3">
+      <label for="inputFile" class="form-label">Input File</label>
+      <div class="input-group">
+        <input type="text" class="form-control" id="inputFile" placeholder="Input file">
+        <button class="btn btn-outline-secondary" id="openFileBtn">Open File</button>
+      </div>
+    </div>
 
-  <input id="startTime" placeholder="Start time" class="horizontal-text-small"><button id="setToPlayerTimeStart">Set to Player Time</button><br>
-  <input id="endTime" placeholder="End time" class="horizontal-text-small"><button id="setToPlayerTimeEnd">Set to Player Time</button><br><br>
-  <input id="gain" placeholder="Gain (e.g. 5)" class="horizontal-text-small"><br>
-  <input id="quality" placeholder="QP quality (e.g. 20)" class="horizontal-text-small"><br>
-  <input id="useEncoder" placeholder="Encoder (e.g. libx264)" class="horizontal-text-small"><br>
+    <div class="mb-3">
+      <label for="outputFile" class="form-label">Output File</label>
+      <div class="input-group">
+        <input type="text" class="form-control" id="outputFile" placeholder="Output file">
+        <button class="btn btn-outline-secondary" id="saveFileBtn">Save File</button>
+      </div>
+    </div>
 
-  <button id="runBtn">Run FFmpeg</button>
-  <pre id="output"></pre>
-  <video id="video" width="480" controls></video>
+    <input type="file" id="fileInputDialog" style="display: none;">
+
+    <div class="mb-3">
+      <label for="startTime" class="form-label">Start Time</label>
+      <div class="input-group">
+        <input type="text" class="form-control" id="startTime" placeholder="Start time">
+        <button class="btn btn-outline-primary" id="setToPlayerTimeStart">Set to Player Time</button>
+        <button class="btn btn-outline-primary" id="setToMinStart">Set to Min</button>
+        <button class="btn btn-outline-primary" id="goToStart">Go to</button>
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="endTime" class="form-label">End Time</label>
+      <div class="input-group">
+        <input type="text" class="form-control" id="endTime" placeholder="End time">
+        <button class="btn btn-outline-primary" id="setToPlayerTimeEnd">Set to Player Time</button>
+        <button class="btn btn-outline-primary" id="setToMaxEnd">Set to Max</button>
+        <button class="btn btn-outline-primary" id="goToEnd">Go to</button>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <label for="gain" class="form-label">Gain</label>
+        <input type="text" class="form-control" id="gain" placeholder="Gain (e.g. 5)">
+      </div>
+
+      <div class="col-md-4">
+        <label for="quality" class="form-label">QP Quality</label>
+        <input type="text" class="form-control" id="quality" placeholder="QP quality (e.g. 20)">
+      </div>
+
+      <div class="col-md-4">
+        <label for="useEncoder" class="form-label">Encoder</label>
+        <input type="text" class="form-control" id="useEncoder" placeholder="Encoder (e.g. libx264)">
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <button class="btn btn-success w-100" id="runBtn">Run FFmpeg</button>
+    </div>
+
+    <div class="mt-4">
+      <video id="video" width="100%" controls class="rounded shadow-sm"></video>
+    </div>
+  </div>
 
   <script src="clientSideJS.js"></script>
 </body>

@@ -26,6 +26,12 @@ const outputFileText = document.getElementById('outputFile');
 
 const fileInputDialog = document.getElementById('fileInputDialog')
 
+const setToMinStart = document.getElementById('setToMinStart')
+const goToStart = document.getElementById('goToStart')
+
+const setToMaxEnd = document.getElementById('setToMaxEnd')
+const goToEnd = document.getElementById('goToEnd')
+
 
 function displayVideo(videoFilePath) {
     videoPlayer.src = videoFilePath;
@@ -41,6 +47,18 @@ function formatTime(seconds) {
     const pad = (num, size) => num.toString().padStart(size, '0');
 
     return `${pad(hrs, 2)}:${pad(mins, 2)}:${pad(secs, 2)}.${pad(ms, 3)}`;
+}
+
+function formatTimeReversed(timeStr) {
+  const [hh, mm, rest] = timeStr.split(':');
+  const [ss, ms = '0'] = rest.split('.');
+
+  const hours = parseInt(hh, 10);
+  const minutes = parseInt(mm, 10);
+  const seconds = parseInt(ss, 10);
+  const milliseconds = parseInt(ms.padEnd(3, '0'), 10); // pad to milliseconds if needed
+
+  return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
 }
 
 
@@ -97,6 +115,23 @@ setToPlayerTimeStart.addEventListener("click", () => {
 
 setToPlayerTimeEnd.addEventListener("click", () => {
     endTimeInput.value = formatTime(videoPlayer.currentTime)
+})
+
+setToMinStart.addEventListener("click", () => {
+    startTimeInput.value = "00:00:00.000"
+})
+
+goToStart.addEventListener("click", () => {
+    videoPlayer.currentTime = formatTimeReversed(startTimeInput.value)
+})
+
+setToMaxEnd.addEventListener("click", () => {
+    videoDurationRoundedUp = Math.ceil(videoPlayer.duration)
+    endTimeInput.value = formatTime(videoDurationRoundedUp)
+})
+
+goToEnd.addEventListener("click", () => {
+    videoPlayer.currentTime = formatTimeReversed(endTimeInput.value)
 })
 
 

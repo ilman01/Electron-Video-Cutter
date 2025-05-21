@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Video Cutter</title>
+  <style>
+    input[class="horizontal-text-big"] {
+      width: 70%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    input[class="horizontal-text-small"] {
+      width: 40%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    
+    input.dragover {
+      border: 2px dashed #00aaff;
+      background-color: #eef;
+    }
+  </style>
+</head>
+<body>
+  <h2>Video Cutter</h2>
+
+  <input type="text" id="inputFile" placeholder="Input file" class="horizontal-text-big">
+  <button id="openFileBtn">Open File</button>
+  <br>
+  <input type="text" id="outputFile" placeholder="Output file" class="horizontal-text-big">
+  <button id="saveFileBtn">Save File</button>
+  <br>
+
+  <input type="file" id="fileInputDialog" style="display: none;">
+
+  <input id="startTime" placeholder="Start time" class="horizontal-text-small"><button id="setToPlayerTimeStart">Set to Player Time</button><br>
+  <input id="endTime" placeholder="End time" class="horizontal-text-small"><button id="setToPlayerTimeEnd">Set to Player Time</button><br><br>
+  <input id="gain" placeholder="Gain (e.g. 5)" class="horizontal-text-small"><br>
+  <input id="quality" placeholder="QP quality (e.g. 20)" class="horizontal-text-small"><br>
+  <input id="useEncoder" placeholder="Encoder (e.g. libx264)" class="horizontal-text-small"><br>
+
+  <button id="runBtn">Run FFmpeg</button>
+  <pre id="output"></pre>
+  <video id="video" width="480" controls></video>
+
+  <script src="clientSideJS.js"></script>
+</body>
+</html>

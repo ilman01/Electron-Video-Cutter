@@ -153,4 +153,8 @@ runBtn.addEventListener('click', async () => {
 });
 
 
+// When the program is closing
+ipcRenderer.on('program-is-closing', async () => {
+    await ipcRenderer.invoke('save-data-backend', {fileName: "data.json", data: {name: 'Alice', age: 30}});
+});
 
